@@ -10,7 +10,7 @@ const GamePanel = () => {
 	const [score, setScore] = useState(0)
 
 	return (
-		<div className='flex flex-col justify-between items-center h-full font-main bg-gradient-to-b from-[#1f3756] to-[#141539] text-white'>
+		<div className='flex flex-col items-center h-full font-main bg-gradient-to-b from-[#1f3756] to-[#141539] text-white'>
 			<Score score={score} />
 			{!selectedVariant ? (
 				<Picker setSelectedVariant={setSelectedVariant} />
@@ -21,7 +21,7 @@ const GamePanel = () => {
 					setHouseVariant={setHouseVariant}
 				/>
 			)}
-			<div className='mb-10'>
+			<div className='mb-10 mt-auto'>
 				<button className='py-2 px-10 tracking-widest border rounded-lg uppercase'>
 					rules
 				</button>
