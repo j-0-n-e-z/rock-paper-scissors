@@ -1,9 +1,10 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { variantColors } from '../data/variantColors'
+import { Variant as TVariant } from '../data/variants'
 
 type VariantProps = {
-	variant: string | undefined
-	setSelectedVariant?: (variant: string | undefined) => void
+	variant: TVariant
+	setSelectedVariant?: (variant: TVariant) => void
 }
 
 const Variant: FC<VariantProps> = ({

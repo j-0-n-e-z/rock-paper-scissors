@@ -3,3 +3,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .picked-variant {
+    @apply flex flex-col gap-5 items-center uppercase tracking-wider relative;
+  }
+  .winner-circle {
+    @apply w-64 h-64 absolute bottom-[-20px] rounded-full bg-circle;
+  }
+}

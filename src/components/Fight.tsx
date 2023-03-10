@@ -1,47 +1,87 @@
-import React, { FC, useEffect } from 'react'
+import { FC, SetStateAction, useEffect, useState } from 'react'
 import { getRandomVariant } from '../utils/getRandomVariant'
+import { getFightResult } from '../utils/getFightResult'
 import Variant from './Variant'
+import { Variant as TVariant } from '../data/variants'
 
 type FightProps = {
-	selectedVariant: string
-	houseVariant: string | undefined
-	setHouseVariant: (variant: string | undefined) => void
+	selectedVariant: TVariant | undefined
+	houseVariant: TVariant | undefined
+	setHouseVariant: (variant: TVariant | undefined) => void
+	setScore: React.Dispatch<SetStateAction<number>>
+	reset: () => void
 }
+
+export type FightResult = 'you lose' | 'you win' | 'tie'
 
 const Fight: FC<FightProps> = ({
 	selectedVariant,
 	houseVariant,
-	setHouseVariant
+	setHouseVariant,
+	setScore,
+	reset
 }) => {
+	const [fightResult, setFightResult] = useState<FightResult>()
+
 	useEffect(() => {
-		const timeout = setTimeout(() => {
+		const houseVariantTimeout = setTimeout(() => {
 			setHouseVariant(getRandomVariant())
 		}, 1000)
 
-		return () => clearTimeout(timeout)
+		return () => clearTimeout(houseVariantTimeout)
 	}, [])
+
+	useEffect(() => {
+		let winnerTimeout: any
+
+		if (houseVariant) {
+			winnerTimeout = setTimeout(() => {
+				const result = getFightResult(
+					selectedVariant as TVariant,
+					houseVariant as TVariant
+				)
+				setFightResult(result)
+				setScore(prev =>
+					result === 'you win'
+						? prev + 1
+						: result === 'you lose'
+						? prev - 1
+						: prev
+				)
+			}, 500)
+		}
+
+		return () => clearTimeout(winnerTimeout)
+	}, [houseVariant])
 
 	return (
 		<>
-			<div className='flex gap-x-10 flex-wrap justify-center mt-12'>
-				<div className='flex flex-col gap-5 items-center uppercase tracking-wider'>
-					<Variant variant={selectedVariant} />
-					<span className='w-32 text-center'>you picked</span>
+			<div className='flex gap-x-10 flex-wrap justify-center mt-20'>
+				<div className='picked-variant'>
+					{fightResult === 'you win' && <div className='winner-circle'></div>}
+					<Variant variant={selectedVariant as TVariant} />
+					<span className='w-32 text-center z-10'>you picked</span>
 				</div>
-				<div className='flex flex-col gap-5 items-center uppercase tracking-wider'>
+				<div className='picked-variant'>
+					{fightResult === 'you lose' && <div className='winner-circle'></div>}
 					{houseVariant ? (
 						<Variant variant={houseVariant} />
 					) : (
 						<div className='w-32 h-32 border-10 border-transparent bg-[#14233c] rounded-full'></div>
 					)}
-					<span className='w-32 whitespace-nowrap -ml-4'>the house picked</span>
+					<span className='w-32 whitespace-nowrap -ml-4 z-10'>
+						the house picked
+					</span>
 				</div>
 			</div>
-			<div className='w-4/6 h-28 mt-16'>
-				{houseVariant && (
+			<div className='w-4/6 h-28 mt-12'>
+				{houseVariant && fightResult && (
 					<div className='h-28 flex flex-col items-center justify-between'>
-						<span className='uppercase text-5xl font-bold'>you lose</span>
-						<button className='rounded-lg tracking-wider uppercase bg-white text-black py-3 px-16'>
+						<span className='uppercase text-5xl font-bold'>{fightResult}</span>
+						<button
+							className='rounded-lg tracking-wider uppercase bg-white text-black py-3 px-16'
+							onClick={reset}
+						>
 							play again
 						</button>
 					</div>
