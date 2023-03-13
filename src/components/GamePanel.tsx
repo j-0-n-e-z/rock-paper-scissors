@@ -16,38 +16,35 @@ const GamePanel = () => {
 	}
 
 	return (
-		<div className='flex flex-col items-center h-full font-main bg-gradient-to-b from-[#1f3756] to-[#141539] text-white overflow-hidden'>
-			{isShowRules ? (
+		<div className='flex flex-col items-center h-full font-main main-background text-white overflow-hidden'>
+			{isShowRules && (
 				<div
-					className='w-full h-full flex justify-center items-center'
+					className='w-full h-full flex justify-center items-center absolute z-30 main-background'
 					onClick={() => setIsShowRules(false)}
 				>
 					<img src='src/assets/images/image-rules.svg' alt='rules' />
 				</div>
-			) : (
-				<>
-					<Score score={score} />
-					{!selectedVariant ? (
-						<Picker setSelectedVariant={setSelectedVariant} />
-					) : (
-						<Fight
-							selectedVariant={selectedVariant}
-							houseVariant={houseVariant}
-							setHouseVariant={setHouseVariant}
-							setScore={setScore}
-							reset={reset}
-						/>
-					)}
-					<div className='mb-10 mt-auto'>
-						<button
-							className='py-2 px-10 tracking-widest border rounded-lg uppercase'
-							onClick={() => setIsShowRules(true)}
-						>
-							rules
-						</button>
-					</div>
-				</>
 			)}
+			<Score score={score} />
+			{!selectedVariant ? (
+				<Picker setSelectedVariant={setSelectedVariant} />
+			) : (
+				<Fight
+					selectedVariant={selectedVariant}
+					houseVariant={houseVariant}
+					setHouseVariant={setHouseVariant}
+					setScore={setScore}
+					reset={reset}
+				/>
+			)}
+			<div className='mb-10 mt-auto'>
+				<button
+					className='py-2 px-10 tracking-widest border rounded-lg uppercase'
+					onClick={() => setIsShowRules(true)}
+				>
+					rules
+				</button>
+			</div>
 		</div>
 	)
 }
