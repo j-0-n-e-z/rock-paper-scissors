@@ -12,7 +12,15 @@ type FightProps = {
 	reset: () => void
 }
 
-export type FightResult = 'you lose' | 'you win' | 'tie'
+export const fightResults = {
+	win: 'you win' as const,
+	lose: 'you lose' as const,
+	tie: 'tie' as const
+}
+
+type ValueOf<T> = T[keyof T]
+
+export type FightResult = ValueOf<typeof fightResults>
 
 const Fight: FC<FightProps> = ({
 	selectedVariant,
@@ -58,12 +66,16 @@ const Fight: FC<FightProps> = ({
 		<>
 			<div className='flex gap-x-10 flex-wrap justify-center mt-20'>
 				<div className='picked-variant'>
-					{fightResult === 'you win' && <div className='winner-circle'></div>}
+					{fightResult === fightResults.win && (
+						<div className='winner-circle'></div>
+					)}
 					<Variant variant={selectedVariant as TVariant} />
 					<span className='w-32 text-center z-10'>you picked</span>
 				</div>
 				<div className='picked-variant'>
-					{fightResult === 'you lose' && <div className='winner-circle'></div>}
+					{fightResult === fightResults.lose && (
+						<div className='winner-circle'></div>
+					)}
 					{houseVariant ? (
 						<Variant variant={houseVariant} />
 					) : (
