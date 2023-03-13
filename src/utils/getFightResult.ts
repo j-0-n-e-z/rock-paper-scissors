@@ -5,16 +5,20 @@ export const getFightResult = (
 	selectedVariant: Variant,
 	houseVariant: Variant
 ): FightResult => {
+	const variantsValues = Object.values(variants)
+	const selectedVariantIndex = variantsValues.findIndex(
+		x => x === selectedVariant
+	)
+	const houseVariantIndex = variantsValues.findIndex(x => x === houseVariant)
+
 	if (
-		(selectedVariant === variants.rock && houseVariant === variants.scissors) ||
-		(selectedVariant === variants.scissors && houseVariant === variants.paper) ||
-		(selectedVariant === variants.paper && houseVariant === variants.rock)
+		selectedVariantIndex ===
+		(houseVariantIndex + 1) % variantsValues.length
 	) {
 		return fightResults.win
 	} else if (
-		(selectedVariant === variants.rock && houseVariant === variants.paper) ||
-		(selectedVariant === variants.paper && houseVariant === variants.scissors) ||
-		(selectedVariant === variants.scissors && houseVariant === variants.rock)
+		selectedVariantIndex ===
+		(houseVariantIndex + 2) % variantsValues.length
 	) {
 		return fightResults.lose
 	}
