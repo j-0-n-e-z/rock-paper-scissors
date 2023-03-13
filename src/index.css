@@ -11,4 +11,7 @@
   .winner-circle {
     @apply w-64 h-64 absolute bottom-[-20px] rounded-full bg-circle;
   }
+  .main-background {
+    @apply bg-gradient-to-b from-[#1f3756] to-[#141539];
+  }
 }
