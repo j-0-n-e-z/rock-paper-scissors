@@ -6,11 +6,9 @@ import { Variant as TVariant } from '../data/variants'
 import { ValueOf } from '../types'
 
 type FightProps = {
-	selectedVariant: TVariant | undefined
-	houseVariant: TVariant | undefined
-	setHouseVariant: (variant: TVariant | undefined) => void
+	selectedVariant: TVariant | undefined,
+	setSelectedVariant: (variant: TVariant | undefined) => void
 	setScore: React.Dispatch<SetStateAction<number>>
-	reset: () => void
 }
 
 export const fightResults = {
@@ -23,11 +21,10 @@ export type FightResult = ValueOf<typeof fightResults>
 
 const Fight: FC<FightProps> = ({
 	selectedVariant,
-	houseVariant,
-	setHouseVariant,
-	setScore,
-	reset
+	setSelectedVariant,
+	setScore
 }) => {
+	const [houseVariant, setHouseVariant] = useState<TVariant>()
 	const [fightResult, setFightResult] = useState<FightResult>()
 
 	useEffect(() => {
@@ -39,10 +36,10 @@ const Fight: FC<FightProps> = ({
 	}, [])
 
 	useEffect(() => {
-		let winnerTimeout: any
+		let fightResultTimeout: any
 
 		if (houseVariant) {
-			winnerTimeout = setTimeout(() => {
+			fightResultTimeout = setTimeout(() => {
 				const result = getFightResult(
 					selectedVariant as TVariant,
 					houseVariant as TVariant
@@ -58,8 +55,13 @@ const Fight: FC<FightProps> = ({
 			}, 500)
 		}
 
-		return () => clearTimeout(winnerTimeout)
+		return () => clearTimeout(fightResultTimeout)
 	}, [houseVariant])
+
+	function reset() {
+		setSelectedVariant(undefined)
+		setHouseVariant(undefined)
+	}
 
 	return (
 		<>
