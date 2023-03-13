@@ -1,5 +1,5 @@
-import { Variant } from '../data/variants'
+import { variants } from '../data/variants'
 
-export function getRandomVariant(): Variant {
-	return ['rock', 'paper', 'scissors'][~~(Math.random() * 2.99)] as Variant
+export function getRandomVariant() {
+	return Object.values(variants)[~~(Math.random() * 2.99)]
 }

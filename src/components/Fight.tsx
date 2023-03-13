@@ -3,6 +3,7 @@ import { getRandomVariant } from '../utils/getRandomVariant'
 import { getFightResult } from '../utils/getFightResult'
 import Variant from './Variant'
 import { Variant as TVariant } from '../data/variants'
+import { ValueOf } from '../types'
 
 type FightProps = {
 	selectedVariant: TVariant | undefined
@@ -13,12 +14,10 @@ type FightProps = {
 }
 
 export const fightResults = {
-	win: 'you win' as const,
-	lose: 'you lose' as const,
-	tie: 'tie' as const
-}
-
-type ValueOf<T> = T[keyof T]
+	win: 'you win',
+	lose: 'you lose',
+	tie: 'tie'
+} as const
 
 export type FightResult = ValueOf<typeof fightResults>
 
