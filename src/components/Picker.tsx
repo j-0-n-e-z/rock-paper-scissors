@@ -14,7 +14,7 @@ const Picker: FC<PickerProps> = ({ setSelectedVariant }) => {
 				src='src/assets/images/bg-triangle.svg'
 				alt='triangle'
 			/>
-			{variants.map(variant => (
+			{Object.values(variants).map(variant => (
 				<Variant
 					key={variant}
 					variant={variant}
