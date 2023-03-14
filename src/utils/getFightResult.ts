@@ -9,16 +9,12 @@ export const getFightResult = (
 	const selectedVariantIndex = variantsValues.indexOf(selectedVariant)
 	const houseVariantIndex = variantsValues.indexOf(houseVariant)
 
-	if (
-		selectedVariantIndex ===
-		(houseVariantIndex + 1) % variantsValues.length
-	) {
+	// this would work only for [paper, scissors, rock] in this order only
+	if (selectedVariantIndex === (houseVariantIndex + 1) % variantsValues.length)
 		return fightResults.win
-	} else if (
-		selectedVariantIndex ===
-		(houseVariantIndex + 2) % variantsValues.length
-	) {
+
+	if (selectedVariantIndex === (houseVariantIndex + 2) % variantsValues.length)
 		return fightResults.lose
-	}
+
 	return fightResults.tie
 }
