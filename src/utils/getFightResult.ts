@@ -6,10 +6,8 @@ export const getFightResult = (
 	houseVariant: Variant
 ): FightResult => {
 	const variantsValues = Object.values(variants)
-	const selectedVariantIndex = variantsValues.findIndex(
-		x => x === selectedVariant
-	)
-	const houseVariantIndex = variantsValues.findIndex(x => x === houseVariant)
+	const selectedVariantIndex = variantsValues.indexOf(selectedVariant)
+	const houseVariantIndex = variantsValues.indexOf(houseVariant)
 
 	if (
 		selectedVariantIndex ===

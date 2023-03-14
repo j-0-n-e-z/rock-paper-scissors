@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Variant as TVariant, variants } from '../data/variants'
 import Variant from './Variant'
 

@@ -6,7 +6,7 @@ import { Variant as TVariant } from '../data/variants'
 import { ValueOf } from '../types'
 
 type FightProps = {
-	selectedVariant: TVariant,
+	selectedVariant: TVariant
 	setSelectedVariant: (variant: TVariant | undefined) => void
 	setScore: React.Dispatch<SetStateAction<number>>
 }
@@ -46,9 +46,9 @@ const Fight: FC<FightProps> = ({
 				)
 				setFightResult(result)
 				setScore(prev =>
-					result === 'you win'
+					result === fightResults.win
 						? prev + 1
-						: result === 'you lose'
+						: result === fightResults.lose
 						? prev - 1
 						: prev
 				)
